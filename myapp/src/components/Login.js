@@ -51,6 +51,36 @@ class Login extends Component {
         if (Object.keys(errors).length === 0) {
             console.log(data);
             //Call an api here
+
+            fetch('https://localhost:3006/Api/Login', {
+            method: 'post',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                Email: this.state.Email,
+                Password: this.state.Password,
+                
+            })
+
+        }).then((Response) => Response.json())
+
+            .then((result) => {
+
+                console.log(result);
+
+                if (result.Status == 'Invalid')
+
+                    alert('Invalid User');
+
+                else
+
+                    this.props.history.push("/Dashboard");
+
+            })
+
+
             //Resetting the form
             this.setState(this.getInitialState());
         } else {
