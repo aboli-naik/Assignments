@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Form, Input, Label, FormGroup, FormFeedback, Button } from 'reactstrap';
 import { isEmail } from 'validator';
+import { withRouter } from 'react-router-dom';
 
 class Register extends Component {
 
@@ -34,6 +35,10 @@ class Register extends Component {
         });
     }
 
+    showAlert  ()  {
+       alert('password should containg atleast 8 chracter')
+      
+    }
     validate = () => {
         const { data } = this.state;
         let errors = {};
@@ -59,37 +64,35 @@ class Register extends Component {
             console.log(data);
             //Call an api here
 
-            fetch('https://localhost:3006/Api/Login', {
-            method: 'post',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                Email: this.state.Email,
-                Password: this.state.Password,
-                emailerror: this.Emailerror
+            fetch('https://48c5553c-7494-4832-8ec0-f583825c9deb.mock.pstmn.io/api/login', {
+                method: 'post',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    Email: this.state.Email,
+                    Password: this.state.Password,
+                    emailerror: this.Emailerror
 
-            })
+                })
 
-        }).then((Response) => Response.json())
+            }).then((Response) => Response)
 
-            .then((result) => {
+                .then((result) => {
 
-                console.log(result);
+                    console.log(result);
 
-                if (result.Status == 'Invalid')
+                    if (result.Status == 'Invalid')
 
-                    alert('Invalid User');
+                        alert('Invalid User');
 
-                else
+                    else
+                        alert('successful account creation');
+                    this.props.history.push("/login");
 
-                    this.props.history.push("/Dashboard");
+                })
 
-            })
-
-
-            //Resetting the form
             this.setState(this.getInitialState());
         } else {
             this.setState({ errors });
@@ -120,7 +123,7 @@ class Register extends Component {
 
                 <FormGroup>
                     <Label for="password">Password</Label>
-                    <Input id="password" value={data.password} type="password" name="password" invalid={errors.password ? true : false} onChange={this.handleChange} />
+                    <Input id="password" onClick={this.showAlert} value={data.password} type="password" name="password" invalid={errors.password ? true : false} onChange={this.handleChange} />
                     <FormFeedback>{errors.password}</FormFeedback>
                 </FormGroup>
 
@@ -136,4 +139,4 @@ class Register extends Component {
     }
 }
 
-export default Register;
+export default withRouter(Register);

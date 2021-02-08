@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import { Form, Input, Label, FormGroup, FormFeedback, Button } from 'reactstrap';
 import { isEmail } from 'validator';
+import { withRouter } from 'react-router-dom';
+
 
 class Login extends Component {
 
     constructor(props) {
         super(props);
         this.state = this.getInitialState();
+        
     }
 
     getInitialState = () => ({
@@ -35,7 +38,8 @@ class Login extends Component {
         const { data } = this.state;
         let errors = {};
       
-        if (data.email === '') errors.email = 'Email can not be blank.';
+        if (data.email === '') {errors.email = 'Email can not be blank.'}
+        
         if (data.password === '') errors.password = 'Password must be valid.';
       
         return errors;
@@ -47,12 +51,14 @@ class Login extends Component {
         const { data } = this.state;
 
         const errors = this.validate();
+        
 
         if (Object.keys(errors).length === 0) {
             console.log(data);
             //Call an api here
-
-            fetch('https://localhost:3006/Api/Login', {
+                                  
+              
+            fetch('https://48c5553c-7494-4832-8ec0-f583825c9deb.mock.pstmn.io/api/login', {
             method: 'post',
             headers: {
                 'Accept': 'application/json',
@@ -63,11 +69,12 @@ class Login extends Component {
                 Password: this.state.Password,
                 
             })
+            
 
-        }).then((Response) => Response.json())
+        }).then((Response) => Response)
 
             .then((result) => {
-
+                console.log('hiiiiiiii');
                 console.log(result);
 
                 if (result.Status == 'Invalid')
@@ -75,8 +82,7 @@ class Login extends Component {
                     alert('Invalid User');
 
                 else
-
-                    this.props.history.push("/Dashboard");
+                this.props.history.push("/MyAccount");
 
             })
 
@@ -111,4 +117,4 @@ class Login extends Component {
     }
 }
 
-export default Login;
+export default withRouter(Login)

@@ -1,12 +1,17 @@
 import React, { Component } from 'react';
 
-class Home extends Component{
+class Home extends Component {
 
-    render(){
-        return(
-                  <h1>Welcome</h1>
-           
- 
+    render() {
+        return (
+            <div>
+                <h1>Welcome Home</h1>
+
+            </div>
+
+
+
+
         )
     }
 }

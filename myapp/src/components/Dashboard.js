@@ -1,13 +1,19 @@
-import React from 'react';
+import { withRouter } from 'react-router';
+import React, { Component } from 'react';
 
-class Dashboard extends Comment{
-
+class Dashboard extends Component {
+  
     render(){
 
         return(
-            <h1>Welcome Dshboard</h1>
+            <div>
+            <h1>helloo dashboard</h1>
+<li> My Account</li>
+
+            </div>
+            
         )
     }
 }
 
-export default Dashboard
+export default withRouter(Dashboard);
